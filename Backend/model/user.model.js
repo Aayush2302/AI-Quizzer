@@ -1,29 +1,28 @@
-import mongoose from "mongoose";
-
+import mongoose from 'mongoose';
 const userSchema = new mongoose.Schema(
-    {
-      name: {
-        type: String,
-        required: true,
-        trim: true,
-      },
-      email: {
-        type: String,
-        required: true,
-        unique: true, // Ensures no duplicate emails
-        lowercase: true,
-        trim: true,
-      },
-      password: {
-        type: String,
-        required: true,
-        minlength: 6, // Minimum password length
-      },
-    
+  {
+    name: {
+      type: String,
+      required: true,
+      trim: true,
     },
-    { timestamps: true }
-  );
-  
-  const User = mongoose.model("User", userSchema);
-  
-  export default User;
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+      lowercase: true,
+      trim: true,
+    },
+    password: {
+      type: String,
+      required: true,
+      minlength: 6,
+    },
+    quizId: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Quiz' }], // Make sure this is referencing Quiz by ObjectId
+  },
+  { timestamps: true }
+);
+
+const User = mongoose.model('User', userSchema);
+
+export default User;
