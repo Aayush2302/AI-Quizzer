@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+
 const userSchema = new mongoose.Schema(
   {
     name: {
@@ -18,7 +19,13 @@ const userSchema = new mongoose.Schema(
       required: true,
       minlength: 6,
     },
-    quizId: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Quiz' }], // Make sure this is referencing Quiz by ObjectId
+    quizResults: [
+      {
+        quizId: { type: mongoose.Schema.Types.ObjectId, ref: 'Quiz' }, // Referencing Quiz's _id
+        score: { type: Number },
+        percentage: { type: Number },
+      },
+    ],
   },
   { timestamps: true }
 );

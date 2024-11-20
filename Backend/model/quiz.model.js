@@ -15,11 +15,6 @@ const QuestionSchema = new mongoose.Schema({
 
 // Quiz Schema
 const quizSchema = new mongoose.Schema({
-  quizId: {
-    type: String,
-    required: true,
-    unique: true,
-  },
   title: {
     type: String,
     required: true,
@@ -40,6 +35,11 @@ const quizSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Question',
   }],
+    result: {
+        score: { type: Number, default: 0 },
+        TotalQuestions: { type: Number, default: 0 },
+        percentage: { type: Number, default: 0 },
+    },
 });
 
 export const Question = mongoose.model('Question', QuestionSchema);

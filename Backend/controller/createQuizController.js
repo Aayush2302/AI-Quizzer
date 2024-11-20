@@ -115,18 +115,18 @@ const sendQueryToGroq = async (req, res) => {
 
     const savedQuiz = await quiz.save();
 
-    if (userId) {
-      const user = await User.findById(userId);
-      if (user) {
-        console.log("User found");
+    // if (userId) {
+    //   const user = await User.findById(userId);
+    //   if (user) {
+    //     console.log("User found");
         
-        user.quizId.push(savedQuiz._id);
-        await user.save();
-      } else {
-        return res.status(404).json({ success: false, error: "User not found." });
-      }
-    }
-    res.status(200).json({ success: true, data: savedQuiz });
+    //     user.quizId.push(savedQuiz._id);
+    //     await user.save();
+    //   } else {
+    //     return res.status(404).json({ success: false, error: "User not found." });
+    //   }
+    // }
+    res.status(200).json({ success: true, data: savedQuiz._id });
   } catch (error) {
     console.error(error);
     res.status(500).json({ success: false, error: error.message });
