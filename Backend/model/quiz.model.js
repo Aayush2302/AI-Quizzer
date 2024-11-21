@@ -10,7 +10,7 @@ const QuestionSchema = new mongoose.Schema({
       option: { type: String, required: true }
     }
   ],
-  correctAnswer: { type: String, required: true }
+  correctAnswer: { type: String, required: true, select: false },
 });
 
 // Quiz Schema
@@ -40,6 +40,10 @@ const quizSchema = new mongoose.Schema({
         TotalQuestions: { type: Number, default: 0 },
         percentage: { type: Number, default: 0 },
     },
+    completedDate: {
+        type: Date, 
+        default: null, // Default value if not completed
+      },
 });
 
 export const Question = mongoose.model('Question', QuestionSchema);

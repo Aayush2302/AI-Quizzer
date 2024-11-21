@@ -1,6 +1,18 @@
 import { Quiz } from '../model/quiz.model.js';
 import User from '../model/user.model.js';
 import mongoose from 'mongoose';
+
+// Sample request body for Submission
+// {
+//     "quizId": "673e78f12391fc348bb0ef53",
+//     "userAnswers": [
+//         { "questionId": "673db70a44bdd7e4eb7b7115", "selectAnswer": "1" },
+//         { "questionId": "673db70a44bdd7e4eb7b711a", "selectAnswer": "2" }, 
+//         ........
+//     ],
+//     "userId": "673d6cf4676694a38c0f98ca"
+// }
+
 const checkAnswerAndSubmit = async (req, res) => {
   try {
     const { quizId, userAnswers, userId } = req.body;
@@ -19,16 +31,12 @@ const checkAnswerAndSubmit = async (req, res) => {
         const questionId = new mongoose.Types.ObjectId(userAnswer.questionId);
       
         const question = quiz.questions.find((q) => q._id.equals(questionId));
-      
         // Check if the question is found
         if (!question) {
-        //   console.log(`Question with ID ${userAnswer.questionId} not found`);
-          return; // If the question doesn't exist, skip to the next answer
+          return; 
         }
-      
         // Check if the correct answer matches the user's selected answer
         if (question.correctAnswer === userAnswer.selectAnswer) {
-        //   console.log(`Correct answer for question ID ${userAnswer.questionId}`);
           score++; // Increment the score if the answer is correct
         }
       });
@@ -41,16 +49,19 @@ const checkAnswerAndSubmit = async (req, res) => {
 
     // Store the result in the Quiz document
     quiz.result = result;  
-    console.log(quiz.result);
-    
+    // console.log(quiz.result);
+
+    const today = new Date();
+    const dateOnly = new Date(today.getFullYear(), today.getMonth(), today.getDate()); // This removes time
+    quiz.completedDate = dateOnly;
+  
     await quiz.save();
 
     if (userId) {
       const user = await User.findById(userId);
       if (user) {
-        // Ensure that you're using the correct quiz _id reference
         user.quizResults.push({
-          quizId: quiz._id,  // Use Mongo-generated ObjectId for the quiz reference
+          quizId: quiz._id,  // Used Mongo-generated ObjectId 
           score: result.score,
           percentage: result.percentage,
         });
