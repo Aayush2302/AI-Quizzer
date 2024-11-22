@@ -13,8 +13,8 @@ const groq = new Groq({ apikey: process.env.GROQ_API_KEY });
 
 const sendQueryToGroq = async (req, res) => {
   try {
-    const { Grade, Subject, TotalQuestions, MaxScore, Difficulty,title,userId } = req.body;
-
+    const { Grade, Subject, TotalQuestions, MaxScore, Difficulty,title } = req.body;
+    const userId = req.user.userId;
     // Construct the payload
     const prompt = `
       Generate a JSON array of quiz questions in the following format:

@@ -4,7 +4,7 @@ import  User  from "../model/user.model.js";
 // we have to provide percentage,condition in query & userId in body
 export const fltByGrade = async (req, res) => {
   try {
-    const { userId } = req.body; // Extract userId from the body
+    const userId = req.user.userId; // Extract userId from the body
     const { percentage, condition } = req.query; // Extract filters from query
 
     // Validate inputs
@@ -73,7 +73,7 @@ export const fltByGrade = async (req, res) => {
 // we have to provide subject in query/params & userId in body
 export const fltBySubject = async (req, res) => {
   try {
-    const { userId } = req.body; // Extract userId from body
+    const userId = req.user.userId; // Extract userId from JWT
     const { subject } = req.query; // Extract subject from query
 
     // Validate inputs
@@ -124,7 +124,7 @@ export const fltBySubject = async (req, res) => {
 // we have to provide date, from, to in query/params & userId in body
 export const fltByDate = async (req, res) => {
   try {
-    const { userId } = req.body; // Extract userId from body
+    const userId = req.user.userId; // Extract userId from JWT
     const { date, from, to } = req.query; // Extract date filters from query
 
     // Validate inputs

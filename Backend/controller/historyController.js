@@ -3,7 +3,7 @@ import { Quiz } from "../model/quiz.model.js";
 
 const getUserQuizzes = async (req, res) => {
   try {
-    const { userId } = req.body; // Extract userId from request parameters
+    const userId = req.user.userId; // Extract userId from decoded JWT
 
     if (!userId) {
       return res.status(400).json({ success: false, message: "User ID is required" });
