@@ -16,7 +16,7 @@ import mongoose from 'mongoose';
 const checkAnswerAndSubmit = async (req, res) => {
   try {
     const { quizId, userAnswers, userId } = req.body;
-    console.log(quizId);
+    // console.log(quizId);
 
     const quiz = await Quiz.findById(quizId).populate('questions');
     if (!quiz) {
